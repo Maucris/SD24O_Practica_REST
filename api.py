@@ -31,10 +31,10 @@ def alumno_por_id(id: int, sesion: Session = Depends(generador_sesion)):
 
 
 
-#@app.get("/fotos")
-#def lista_fotos(sesion: Session = Depends(generador_sesion)):
-#    print("API consultando todas las fotos")
-#    return repo.devuelve_fotos(sesion)
+@app.get("/fotos")
+def lista_fotos(sesion: Session = Depends(generador_sesion)):
+    print("API consultando todas las fotos")
+    return repo.devuelve_fotos(sesion)
 
 @app.get("/fotos/{id}")
 def foto_por_id(id: int, sesion: Session = Depends(generador_sesion)):
