@@ -5,6 +5,7 @@ import shutil
 import os
 import uuid
 import orm.repo as repo 
+import orm.esquemas as esquemas
 from sqlalchemy.orm import Session
 from orm.config import generador_sesion 
 
@@ -81,3 +82,33 @@ def borra_alumno_por_id(id: int, sesion: Session = Depends(generador_sesion)):
     repo.borrar_calificaciones_por_id_alumno
     repo.borrar_alumno_por_id
     return {"usuario borado", "ok"}
+
+@app.post("/alumnos")
+def guardar_alumno(alumno: esquemas.AlumnoBase, sesion: Session = Depends(generador_sesion)):
+    print("API guardando nuevo alumno")
+    return repo.guardar_alumno(sesion, alumno)
+
+@app.put("/alumnos/{id}")
+def actualizar_alumno(id: int, alumno: esquemas.AlumnoBase, sesion: Session = Depends(generador_sesion)):
+    print("API actualizando alumno con id = {id}")
+    return repo.actualiza_alumno(sesion, id, alumno)
+
+@app.post("/alumnos/{id}/calificaciones")
+def guardar_calificacion(id: int, calificacion: esquemas.CalificacionBase, sesion: Session = Depends(generador_sesion)):
+    print("API guardando calificación para alumno con id = {id}")
+    return repo.guardar_calificacion(sesion, id, calificacion)
+
+@app.put("/calificaciones/{id}")
+def actualizar_calificacion(id: int, calificacion: esquemas.CalificacionBase, sesion: Session = Depends(generador_sesion)):
+    print("API actualizando calificación con id = {id}")
+    return repo.actualizar_calificacion(sesion, id, calificacion)
+
+@app.post("/alumnos/{id}/fotos")
+def guardar_foto(id: int, foto: esquemas.FotoBase, sesion: Session = Depends(generador_sesion)):
+    print("API guardando foto para alumno con id = {id}")
+    return repo.guardar_foto(sesion, id, foto)
+
+@app.put("/fotos/{id}")
+def actualizar_foto(id: int, foto: esquemas.FotoBase, sesion: Session = Depends(generador_sesion)):
+    print("API actualizando foto con id = {id}")
+    return repo.actualizar_foto(sesion, id, foto)
